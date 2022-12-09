@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+<div class="container">
+    <br></br>
+    <div class="jumbotron text=center">
+        <center><h1>Natural language Web</h1></center>
+    </div>
+    <br></br>
+    <br></br>
+    <h3>Tapez ou collez un texte en anglais pour connaitre son impact, et l'analyse de son contenu.</h3>
+    <h3>Vous pouvez essayer avec celui ci.</h3>
+    <br></br>
+    <p>« The Road Not Taken » BY Robert Frost</p>
+    <p>
+
+    Two roads diverged in a yellow wood,
+    And sorry I could not travel both,
+    And be one traveller, long I stood
+    And looked down one as far as I could
+    To where it bent in the undergrowth.
+
+    Then took the other, as just as fair,
+    And having perhaps the better claim,
+    Because it was grassy and wanted wear,
+    Though as for that the passing there
+    Had worn them really about the same,
+
+    And both that morning equally lay
+    In leaves no step had trodden black.
+    Oh, I kept the first for another day!
+    Yet knowing how way leads on to way,
+    I doubted if I should ever come back.
+
+    I shall be telling this with a sigh,
+    Somewhere ages and ages hence:
+    Two roads diverged in a wood, and I,
+    I took the one less travelled by,
+    And that has made all the difference.</p>
+    <br></br>
+<div class="container">
+     <form action="{{url_for('analyse')}}" method="POST" id="myForm">
+        <textarea name="rawtext" rows="3" cols="3" class="form-control">
+        </textarea>
+         <br></br>
+         <button type="'submit" name="dotherequest" value="Submit" class="btn btn-primary">Submit</button>
+         <input type="reset" name="" value="Clear" class="btn btn-outline-primary">
+         <a href="{{url_for('index')}}" type="button" class="btn btn-danger">Reset</a>
+    </form>
+</div>
+    <br></br>
+    <div class="container">
+        <div class="card">
+            <div>
+                <p>{{ received_text }}</p>
+            </div>
+            <hr/>
+            <div class="card-body">
+                {% for i in summary %}
+                <li>{{i}}</li>
+                <a href="http://www.dictionary.com/browse/{{i}}?s="  target="_blank" type="button" class="btn btn-outline-primary btn-sm" style="float:right;font-size:9px;color:#fff;">View</a>
+                {% endfor %}
+
+            </div>
+
+            <table class="table table-striped table-light" >
+                <thead>
+                <tr>
+                    <th scope="col">Sentiment</th>
+                    <th scope="col">Polarity</th>
+                    <th scope="col">Subjectivity</th>
+                </tr>
+                </thead>
+                <tbody>
+                <th scope="row">Score</th>
+                <th>{{blob_sentiment}}</th>
+                <th>{{ blob_subjectivity }}</th>
+                <!--<th>{{number_of_tokens }}</th>-->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
